@@ -7,8 +7,8 @@ export const state = () => ({
   ]
 });
 
-export const getters = () => ({
-  getSocial() {
+export const getters = {
+  getSocial: state => {
     return state.items;
   }
-});
+};
