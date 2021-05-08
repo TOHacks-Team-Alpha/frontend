@@ -31,37 +31,44 @@
     </v-col>
 
     <!-- Row 2 -->
-    <v-col :cols="mobile ? '12' : '6'">
-      <v-card>
-        Hello
-      </v-card>
+    <v-col v-if="!mobile" cols="6">
+      <v-parallax src="/img/inclusive.png"> </v-parallax>
     </v-col>
     <v-col :cols="mobile ? '12' : '6'">
-      <v-card>
-        Hello
-      </v-card>
-    </v-col>
-
-    <!-- Row 3 -->
-    <v-col :cols="mobile ? '12' : '6'">
-      <v-card class="px-2">
-        <v-card-text class="text-h4 text-md-h2 white--text">
-          Hello, I am a template!
+      <v-card class="pa-2">
+        <v-card-text class="text-h5 text-md-h4 white--text">
+          Features
         </v-card-text>
-        <v-card-subtitle class="text-subtitle-2 text-md-subtitle-1">
-          this is a subtitle
+        <v-card-subtitle>
+          Check out our features
         </v-card-subtitle>
         <v-divider></v-divider>
         <v-card-text>
-          I would probably put some text here
+          Featues go here
         </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions class="px-0">
-          <v-btn color="primary">I'm a button!</v-btn>
-          <v-spacer />
-          <v-btn color="error"> I'm way over here!</v-btn>
+        <v-card-actions>
+          <v-btn rounded color="primary"> Get Started </v-btn>
+          <v-btn rounded outlined color="info"> Learn More </v-btn>
         </v-card-actions>
       </v-card>
+    </v-col>
+
+    <!-- Spacing -->
+    <v-col cols="12">
+      <v-sheet height="50vh" color="transparent"></v-sheet>
+    </v-col>
+
+    <v-col cols="12">
+      <v-card class="pa-2">
+        <v-card-text>
+          How to or something
+        </v-card-text>
+      </v-card>
+    </v-col>
+
+    <!-- Spacing -->
+    <v-col cols="12">
+      <v-sheet height="25vh" color="transparent"></v-sheet>
     </v-col>
   </v-row>
 </template>
