@@ -48,7 +48,7 @@
         </v-fade-transition>
       </v-container>
     </v-main>
-    <v-footer absolute dark padless app>
+    <v-footer height="227" absolute dark padless app>
       <v-row justify="center" align="center">
         <v-col cols="12">
           <v-card flat tile class="white--text text-center">

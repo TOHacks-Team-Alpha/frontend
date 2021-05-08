@@ -1,12 +1,19 @@
 <template>
   <v-row justify="center" align="center" class="mx-2">
-    <v-col cols="6">
-      <v-card color="transparent">
+    <!-- Spacing -->
+    <v-col cols="12">
+      <v-sheet height="5vh" color="transparent"></v-sheet>
+    </v-col>
+
+    <!-- Row 1 -->
+    <v-col :cols="mobile ? '12' : '6'">
+      <v-card color="transparent" elevation="0">
         <v-card-text class="text-h3 text-md-h2 white--text">
           Start your engines. Ready. Set. Go!
         </v-card-text>
         <v-card-subtitle class="text-overline">
-          Providing a sustainable solution to environmental issues
+          Providing a <i class="success--text"> sustainable </i> solution to
+          environmental issues
         </v-card-subtitle>
         <v-card-actions>
           <v-btn rounded color="primary"> Get Started </v-btn>
@@ -14,11 +21,29 @@
         </v-card-actions>
       </v-card>
     </v-col>
-    <v-col cols="6">
+    <v-col v-if="!mobile" cols="6">
       <v-parallax src="/img/carpool.png"> </v-parallax>
     </v-col>
 
-    <v-col cols="12" sm="8" md="6">
+    <!-- Spacing -->
+    <v-col cols="12">
+      <v-sheet height="50vh" color="transparent"></v-sheet>
+    </v-col>
+
+    <!-- Row 2 -->
+    <v-col :cols="mobile ? '12' : '6'">
+      <v-card>
+        Hello
+      </v-card>
+    </v-col>
+    <v-col :cols="mobile ? '12' : '6'">
+      <v-card>
+        Hello
+      </v-card>
+    </v-col>
+
+    <!-- Row 3 -->
+    <v-col :cols="mobile ? '12' : '6'">
       <v-card class="px-2">
         <v-card-text class="text-h4 text-md-h2 white--text">
           Hello, I am a template!
@@ -42,5 +67,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    isMounted: false
+  }),
+  mounted() {
+    this.isMounted = true;
+  },
+  computed: {
+    mobile() {
+      return (
+        this.isMounted && ["xs", "sm"].includes(this.$vuetify.breakpoint.name)
+      );
+    }
+  }
+};
 </script>
