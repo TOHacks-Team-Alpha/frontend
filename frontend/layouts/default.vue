@@ -21,12 +21,14 @@
     <v-app-bar elevate-on-scroll app>
       <v-app-bar-nav-icon v-if="mobile" @click.stop="drawer = !drawer" />
       <!-- toolbar title wont truncate -->
-      <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer">
-          <v-icon class="mx-1"> {{ icon }} </v-icon>
-          {{ !mobile ? title : trunc }}
-        </router-link>
-      </v-toolbar-title>
+      <div>
+        <v-toolbar-title>
+          <router-link to="/" tag="span" style="cursor: pointer">
+            <v-icon class="mx-1"> {{ icon }} </v-icon>
+            {{ !mobile ? title : trunc }}
+          </router-link>
+        </v-toolbar-title>
+      </div>
       <v-spacer />
       <v-tabs v-if="!mobile" color="white">
         <v-spacer></v-spacer>
@@ -84,9 +86,9 @@ export default {
   data: () => ({
     isMounted: false,
     drawer: false,
-    title: "Vuetify.js",
-    trunc: "Vue",
-    icon: "mdi-home"
+    title: "carpool.tech",
+    trunc: "carpool",
+    icon: "mdi-car"
   }),
   mounted() {
     this.isMounted = true;
