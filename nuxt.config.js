@@ -39,13 +39,13 @@ export default {
       "@nuxtjs/firebase",
       {
         config: {
-          apiKey: "<apiKey>",
-          authDomain: "<authDomain>",
-          projectId: "<projectId>",
-          storageBucket: "<storageBucket>",
-          messagingSenderId: "<messagingSenderId>",
-          appId: "<appId>",
-          measurementId: "<measurementId>"
+          apiKey: "AIzaSyBCUe8NVYGatU0aLShNajXx_glw8xi1TXk",
+          authDomain: "vagon-abe86.firebaseapp.com",
+          projectId: "vagon-abe86",
+          storageBucket: "vagon-abe86.appspot.com",
+          messagingSenderId: "650550396522",
+          appId: "1:650550396522:web:e5e8d302dec41b1972ec13",
+          measurementId: "G-36M4PR6BMG"
         },
         services: {
           auth: true // Just as example. Can be any other service.
