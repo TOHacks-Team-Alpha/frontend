@@ -96,11 +96,13 @@ export default {
   computed: {
     ...mapGetters("modules/layout/routes", ["getRoutes"]),
     ...mapGetters("modules/layout/social", ["getSocial"]),
-    ...mapGetters("modules/firebase/auth", ["isAuth"]),
     mobile() {
       return (
         this.isMounted && ["xs", "sm"].includes(this.$vuetify.breakpoint.name)
       );
+    },
+    isAuth() {
+      return this.$fire.auth.currentUser !== null;
     },
     filteredRoutes() {
       const auth = this.isAuth;
