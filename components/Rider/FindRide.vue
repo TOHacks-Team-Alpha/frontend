@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="5">
+  <v-card v-scroll-reveal="{ delay: 250 }" elevation="5">
     <v-card-text class="text-h4 text-md-h3 white--text">
       Find a Ride
     </v-card-text>

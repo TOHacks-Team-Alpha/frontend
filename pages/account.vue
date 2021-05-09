@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <!-- Login -->
       <v-col cols="12" sm="8" md="6">
-        <v-card v-scroll-reveal="{ delay: 250 }">
+        <v-card v-scroll-reveal="{ delay: 250 }" elevation="5">
           <v-card-text class="text-overline pb-5">
             Account
           </v-card-text>
@@ -56,10 +56,11 @@
                   :value="getName"
                   label="Name"
                   outlined
-                  disabled
                 ></v-text-field>
+                <v-btn @click="updateName()"> update name </v-btn>
               </v-col>
-            </v-row>      <v-row justify="center" align="center">
+            </v-row>
+            <v-row justify="center" align="center">
               <v-col>
                 <v-text-field
                   class="mx-2"
@@ -162,6 +163,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   created() {
@@ -178,7 +180,26 @@ export default {
     ])
   },
   methods: {
-    ...mapActions("modules/user", ["getData"])
+    ...mapActions("modules/user", ["getData"]),
+    async updateName() {
+      const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
+      // const domain = "https://api.vagon.tech";
+      const token = await this.$fire.auth.currentUser.getIdToken();
+      const body = null;
+      await axios
+        .put(domain + "/user", body, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(res => {
+          this.data = res.data;
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log("unable to load data: " + err);
+        });
+    }
   }
 };
 </script>
