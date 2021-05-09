@@ -3,8 +3,8 @@ import colors from "vuetify/es5/util/colors";
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "%s - template",
-    title: "template",
+    titleTemplate: "%s",
+    title: "vagon.tech",
     htmlAttrs: {
       lang: "en"
     },
@@ -20,7 +20,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "~/plugins/vue-scroll-reveal.js", ssr: false }],
+  plugins: [
+    { src: "~/plugins/vue-scroll-reveal.js", ssr: false },
+    { src: "~/plugins/vue2-google-maps.js", ssr: false }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -51,7 +54,8 @@ export default {
           auth: true // Just as example. Can be any other service.
         }
       }
-    ]
+    ],
+    ["@nuxtjs/axios"]
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

@@ -33,24 +33,26 @@
       <v-tabs v-if="!mobile" color="white">
         <v-spacer></v-spacer>
         <v-tabs-slider color="white"></v-tabs-slider>
-        <v-tab v-for="item in filteredRoutes" :key="item.id" :to="item.to">
-          <v-icon class="ma-2" color="grey darken-2">{{ item.icon }}</v-icon>
-          {{ item.title }}
-          <v-icon class="ma-2" color="transparent">{{ item.icon }}</v-icon>
-          <!-- dummy icon to center the text instead of the space between icon and text -->
-        </v-tab>
+        <template v-for="item in filteredRoutes">
+          <v-tab :key="item.id" :to="item.to">
+            <v-icon class="ma-2" color="grey darken-2">{{ item.icon }}</v-icon>
+            {{ item.title }}
+            <v-icon class="ma-2" color="transparent">{{ item.icon }}</v-icon>
+            <!-- dummy icon to center the text instead of the space between icon and text -->
+          </v-tab>
+        </template>
       </v-tabs>
     </v-app-bar>
-    <v-main>
+    <v-main class="mb-8">
       <v-container fluid>
         <v-fade-transition mode="out-in" :hide-on-leave="true">
           <nuxt />
         </v-fade-transition>
       </v-container>
     </v-main>
-    <v-footer height="227" absolute dark padless app>
-      <v-row justify="center" align="center">
-        <v-col cols="12">
+    <v-footer absolute dark padless app>
+      <v-row justify="center" align="center" class="pa-0 ma-0">
+        <v-col cols="12" class="pa-0 ma-0">
           <v-card flat tile class="white--text text-center">
             <v-card-text class="text-body-2 text-md-body-1 white--text">
               <v-icon> {{ icon }} </v-icon>
@@ -59,8 +61,14 @@
             <v-card-text>
               <v-tooltip v-for="(item, index) in getSocial" :key="index" bottom>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn :href="item.href" class="mx-4 white--text" text>
-                    <v-icon class="mr-1" size="24px" v-bind="attrs" v-on="on">
+                  <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    :href="item.href"
+                    class="mx-4 "
+                    text
+                  >
+                    <v-icon class="mr-1" size="24px">
                       {{ item.icon }}
                     </v-icon>
                     <span>{{ item.alt }}</span>
@@ -70,7 +78,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" class="pa-0 ma-0">
           <v-card-text class="text-center">
             &copy; {{ new Date().getFullYear() }}
           </v-card-text>
@@ -81,45 +89,42 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data: () => ({
     isMounted: false,
     drawer: false,
-    title: "carpool.tech",
-    trunc: "carpool",
+    title: "vagon.tech",
+    trunc: "vagon",
     icon: "mdi-car"
   }),
-  mounted() {
+  async mounted() {
     this.isMounted = true;
+    const user = await this.$fire.auth.currentUser;
+    if (user !== null) {
+      this.login(user);
+    }
   },
   computed: {
     ...mapGetters("modules/layout/routes", ["getRoutes"]),
     ...mapGetters("modules/layout/social", ["getSocial"]),
+    ...mapGetters("modules/firebase/auth", ["getUser"]),
     mobile() {
       return (
         this.isMounted && ["xs", "sm"].includes(this.$vuetify.breakpoint.name)
       );
     },
-    isAuth() {
-      return this.$fire.auth.currentUser !== null;
-    },
     filteredRoutes() {
-      const auth = this.isAuth;
-      const unfiltered = this.getRoutes;
-      const filtered = [];
-      if (auth) {
-        return unfiltered;
-      } else {
-        for (let i = 0; i < unfiltered.length; i++) {
-          const route = unfiltered[i];
-          if (!route.requireAuth) {
-            filtered.push(route);
-          }
-        }
-        return filtered;
-      }
+      const routes = this.getRoutes;
+      const auth = this.getUser !== null;
+      const filtered = routes.filter(function(value, index, arr) {
+        return value.requireAuth === false || (auth && value.requireAuth);
+      });
+      return filtered;
     }
+  },
+  methods: {
+    ...mapMutations("modules/firebase/auth/login", ["login"])
   }
 };
 </script>

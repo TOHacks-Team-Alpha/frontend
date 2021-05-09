@@ -26,29 +26,47 @@
       </v-card>
     </v-col>
     <v-col v-if="!mobile" cols="6">
-      <v-parallax v-scroll-reveal="{ delay: 450 }" src="/img/carpool.png">
+      <v-parallax
+        v-scroll-reveal="{ delay: 450 }"
+        src="/img/carpool.png"
+        class="rounded-card"
+      >
       </v-parallax>
     </v-col>
 
     <!-- Spacing -->
     <v-col cols="12">
-      <v-sheet :height="mobile ? '10vh' : '50vh'" color="transparent"></v-sheet>
+      <v-sheet
+        :height="mobile ? '10vh' : '50vh'"
+        color="transparent"
+        class="text-center"
+      >
+        <v-divider
+          v-scroll-reveal="{ delay: 250 }"
+          inset
+          :vertical="true"
+        ></v-divider>
+      </v-sheet>
     </v-col>
 
     <!-- Row 2 -->
     <v-col v-if="!mobile" cols="6">
-      <v-parallax v-scroll-reveal="{ delay: 250 }" src="/img/inclusive.png">
+      <v-parallax
+        v-scroll-reveal="{ delay: 250 }"
+        src="/img/inclusive.png"
+        class="rounded-card"
+      >
       </v-parallax>
     </v-col>
     <v-col :cols="mobile ? '12' : '6'">
-      <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2">
+      <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2 rounded-card">
         <v-card-text class="text-h5 text-md-h4 white--text">
           Features
         </v-card-text>
         <v-card-subtitle>
           Whether you want to drive yourself or drive others; we've got you
-          covered. When you sign up with CarPool.tech today you gain access to
-          all of these great features.
+          covered. When you sign up with vagon.tech today you gain access to all
+          of these great features.
         </v-card-subtitle>
         <v-divider></v-divider>
         <v-card-text>
@@ -72,18 +90,24 @@
 
     <!-- Spacing -->
     <v-col cols="12">
-      <v-sheet :height="mobile ? '10vh' : '50vh'" color="transparent"></v-sheet>
+      <v-sheet
+        :height="mobile ? '10vh' : '50vh'"
+        color="transparent"
+        class="text-center"
+      >
+        <v-divider inset :vertical="true"></v-divider>
+      </v-sheet>
     </v-col>
 
     <!-- Row 3 -->
     <v-col :cols="mobile ? '12' : '6'">
-      <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2">
+      <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2 rounded-card">
         <v-card-text class="text-h5 text-md-h4 white--text">
           Get Started Today
         </v-card-text>
         <v-card-subtitle>
           It's as easy as 1, 2, 3! If you're interested, get started using
-          CarPool.tech today by following these simple steps.
+          vagon.tech today by following these simple steps.
         </v-card-subtitle>
         <v-divider></v-divider>
         <v-card-text>
@@ -105,7 +129,11 @@
       </v-card>
     </v-col>
     <v-col v-if="!mobile" cols="6">
-      <v-img v-scroll-reveal="{ delay: 250 }" src="/img/inclusive2.jpg">
+      <v-img
+        v-scroll-reveal="{ delay: 250 }"
+        src="/img/inclusive2.jpg"
+        class="rounded-card"
+      >
       </v-img>
     </v-col>
 
@@ -177,3 +205,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.rounded-card {
+  border-radius: 25px;
+}
+</style>
