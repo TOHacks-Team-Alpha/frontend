@@ -1,6 +1,5 @@
 <template>
-  <v-card elevation="5"
-   v-if="getRides.length > 0">
+  <v-card elevation="5"  v-if="getRides.length > 0">
     <v-toolbar color="info">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 

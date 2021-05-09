@@ -11,7 +11,7 @@ export const getters = {
 };
 
 export const actions = {
-  async setRides({ commit }) {
+  async setRides({ commit }, payload) {
     const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
     // const domain = "https://api.vagon.tech";
     const endpoint = "/rides";
@@ -25,11 +25,12 @@ export const actions = {
       .then(res => {
         this.data = res.data;
         commit("setRides", res.data);
+        console("set rides ran");
       })
       .catch(err => {
         console.log("unable to load data: " + err);
       });
-  },
+  }
 };
 
 export const mutations = {
