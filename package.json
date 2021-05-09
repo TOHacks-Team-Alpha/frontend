@@ -13,6 +13,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.11.4",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/firebase": "^7.5.0",
     "core-js": "^3.9.1",
     "eslint-config-prettier": "^8.3.0",
     "nuxt": "^2.15.3",
