@@ -12,7 +12,10 @@
         color="transparent"
         elevation="0"
       >
-        <v-card-text class="text-h3 text-md-h2 white--text">
+        <v-card-text
+          class="text-h3 text-md-h2 "
+          :class="$vuetify.theme.dark ? 'white--text' : ''"
+        >
           Start your engines. Ready. Set. Go!
         </v-card-text>
         <v-card-subtitle class="text-overline">
@@ -21,7 +24,7 @@
         </v-card-subtitle>
         <v-card-actions>
           <v-btn rounded color="primary" to="/login"> Get Started </v-btn>
-          <v-btn rounded outlined color="info"> Learn More </v-btn>
+          <v-btn rounded outlined color="info"> Learn More</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -60,7 +63,10 @@
     </v-col>
     <v-col :cols="mobile ? '12' : '6'">
       <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2 rounded-card">
-        <v-card-text class="text-h5 text-md-h4 white--text">
+        <v-card-text
+          class="text-h5 text-md-h4 "
+          :class="$vuetify.theme.dark ? 'white--text' : ''"
+        >
           Features
         </v-card-text>
         <v-card-subtitle>
@@ -101,8 +107,11 @@
 
     <!-- Row 3 -->
     <v-col :cols="mobile ? '12' : '6'">
-      <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2 rounded-card">
-        <v-card-text class="text-h5 text-md-h4 white--text">
+      <v-card v-scroll-reveal="{ delay: 450 }" class="pa-2 rounded-card" id="learn">
+        <v-card-text 
+          class="text-h5 text-md-h4"
+          :class="$vuetify.theme.dark ? 'white--text' : ''"
+        >
           Get Started Today
         </v-card-text>
         <v-card-subtitle>
@@ -114,7 +123,7 @@
           <v-card
             v-for="(step, index) in steps"
             :key="index"
-            color="primary darken-2"
+            color="info"
             elevation="5"
             class="my-2"
           >

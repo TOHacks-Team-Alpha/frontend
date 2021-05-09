@@ -1,6 +1,9 @@
 <template>
-  <v-card>
-    <v-card-text class="text-h4 text-md-h3 white--text">
+  <v-card elevation="5">
+    <v-card-text
+      class="text-h4 text-md-h3"
+      :class="$vuetify.theme.dark ? 'white--text' : ''"
+    >
       Statistics
     </v-card-text>
     <v-card-subtitle>
@@ -17,8 +20,8 @@
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col>
-                  <v-chip color="black">
-                    <v-icon class="mr-2" color="primary">
+                  <v-chip>
+                    <v-icon class="mr-2" color="info">
                       {{ item.icon }}
                     </v-icon>
                     {{ getData[index] }}
@@ -58,8 +61,7 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters("modules/trip/trip", ["getConfirmed"]),
-    ...mapGetters("modules/trip/trip", ["getData"])
+    ...mapGetters("modules/trip/trip", ["getConfirmed", "getData"])
   }
 };
 </script>

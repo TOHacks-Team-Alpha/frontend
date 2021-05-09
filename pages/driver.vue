@@ -5,8 +5,7 @@
       <v-col cols="12" sm="12" md="8">
         <CurrentRiders />
       </v-col>
-
-      <v-col cols="12" sm="12" md="8">
+      <v-col v-if="!getConfirmed" cols="12" sm="12" md="8">
         <TripForm />
       </v-col>
       <v-col cols="12" sm="12" md="8" v-if="getConfirmed">

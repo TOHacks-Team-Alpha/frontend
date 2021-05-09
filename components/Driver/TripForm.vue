@@ -232,8 +232,7 @@ export default {
     ]
   }),
   methods: {
-    ...mapActions("modules/trip/trip", ["setData"]),
-    ...mapActions("modules/trip/trip", ["setConfirmed"]),
+    ...mapActions("modules/trip/trip", ["setData", "setConfirmed"]),
     stepComplete(step) {
       return this.curr > step;
     },

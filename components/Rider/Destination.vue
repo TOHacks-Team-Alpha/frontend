@@ -1,88 +1,86 @@
 <template>
-  <v-row class="mb-3 ml-1">
-    <v-container>
-      <v-form ref="form" v-model="form">
-        <v-row>
-          <v-col cols="6">
-            <v-text-field
-              v-model="start"
-              label="Starting Destination"
-              required
-            ></v-text-field>
-          </v-col>
+  <v-card elevation="0">
+    <v-form ref="form" v-model="form">
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-text-field
+            v-model="start"
+            label="Starting Destination"
+            required
+          ></v-text-field>
+        </v-col>
 
-          <v-col cols="6">
-            <v-text-field
-              v-model="end"
-              label="Ending Destination"
-              type=""
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-subheader class="pl-0 mb-5">
-              View drivers within this distance from your
-              <strong>&nbsp;current location</strong>
-            </v-subheader>
-            <v-slider
-              v-model="startRadius"
-              :thumb-size="24"
-              thumb-label="always"
-            ></v-slider>
-          </v-col>
-          <v-col cols="6">
-            <v-subheader class="pl-0 mb-5">
-              View trips within this distance from your
-              <strong>&nbsp;destination(km)</strong>
-            </v-subheader>
-            <v-slider
-              v-model="endRadius"
-              :thumb-size="24"
-              thumb-label="always"
-            ></v-slider>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-btn @click="searchForRides">Search</v-btn>
-          </v-col>
-        </v-row>
-      </v-form>
-      <v-row
-        v-for="(ride, index) in getDrives"
-        :key="index"
-        justify="center"
-        align="center"
-      >
-        <v-col>
-          <v-card class="mt-3 mb-3 pa-6 mr-3">
-            <v-text class="text-overline">
-              <v-icon color="green darken-2">mdi-car</v-icon> Ride #{{
-                index + 1
-              }}
-              Time of Departure: {{ ride.time }} <br />
-            </v-text>
-            <div class="mt-3">
-              <v-text>
-                Start Address: {{ ride.start_address }} <br />
-                End Address: {{ ride.dest_address }} <br />
-                Distance from Driver Start: {{ ride.start_distance }} <br />
-                Distance from Desired End: {{ ride.dest_distance }} <br />
-                Driver ID: {{ ride.driver_id }} <br />Rides Completed:
-                {{ ride.num_trips_driven }} <br />Rides Taken:
-                {{ ride.num_trips_ridden }} <br />
-                Drive ID: {{ ride.drive_id }}
-              </v-text>
-            </div>
-
-            <v-btn @click="reqRide(ride)" class="mt-4">
-              Request a Ride!
-            </v-btn>
-          </v-card>
+        <v-col cols="12" sm="6">
+          <v-text-field
+            v-model="end"
+            label="Ending Destination"
+            type=""
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-subheader class="pl-0 mb-5">
+            View drivers within this distance from your
+            <strong>&nbsp;current location</strong>
+          </v-subheader>
+          <v-slider
+            v-model="startRadius"
+            :thumb-size="24"
+            thumb-label="always"
+          ></v-slider>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-subheader class="pl-0 mb-5">
+            View trips within this distance from your
+            <strong>&nbsp;destination(km)</strong>
+          </v-subheader>
+          <v-slider
+            v-model="endRadius"
+            :thumb-size="24"
+            thumb-label="always"
+          ></v-slider>
         </v-col>
       </v-row>
-    </v-container>
-  </v-row>
+      <v-row>
+        <v-col>
+          <v-btn @click="searchForRides">Search</v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+    <v-row
+      v-for="(ride, index) in getDrives"
+      :key="index"
+      justify="center"
+      align="center"
+    >
+      <v-col>
+        <v-card class="mt-3 mb-3 pa-6 mr-3">
+          <v-text class="text-overline">
+            <v-icon color="green darken-2">mdi-car</v-icon> Ride #{{
+              index + 1
+            }}
+            Time of Departure: {{ ride.time }} <br />
+          </v-text>
+          <div class="mt-3">
+            <v-text>
+              Start Address: {{ ride.start_address }} <br />
+              End Address: {{ ride.dest_address }} <br />
+              Distance from Driver Start: {{ ride.start_distance }} <br />
+              Distance from Desired End: {{ ride.dest_distance }} <br />
+              Driver ID: {{ ride.driver_id }} <br />Rides Completed:
+              {{ ride.num_trips_driven }} <br />Rides Taken:
+              {{ ride.num_trips_ridden }} <br />
+              Drive ID: {{ ride.drive_id }}
+            </v-text>
+          </div>
+
+          <v-btn @click="reqRide(ride)" class="mt-4">
+            Request a Ride!
+          </v-btn>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -115,7 +113,7 @@ export default {
   },
   methods: {
     ...mapActions("modules/rider/find", ["setDrives"]),
-
+    ...mapActions("modules/rider/rides", ["setRides"]),
     searchForRides() {
       if (this.$refs.form.validate()) {
         this.loader = "loading";
@@ -126,6 +124,7 @@ export default {
           endRadius: this.endRadius
         };
         this.setDrives(payload);
+        this.setRides();
       }
     },
     reset() {

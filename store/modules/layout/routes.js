@@ -11,25 +11,25 @@ export const state = () => ({
       icon: "mdi-car",
       title: "Driver",
       to: "/driver",
-      requireAuth: false
+      requireAuth: true
     },
     {
       icon: "mdi-car",
       title: "Rider",
       to: "/rider",
-      requireAuth: false
+      requireAuth: true
     },
     {
       icon: "mdi-circle-multiple",
       title: "Redeem",
       to: "/redeem",
-      requireAuth: false
+      requireAuth: true
     },
     {
       icon: "mdi-account",
       title: "Account",
       to: "/account",
-      requireAuth: false
+      requireAuth: true
     },
     {
       icon: "mdi-lock",

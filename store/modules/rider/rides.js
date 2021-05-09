@@ -11,7 +11,7 @@ export const getters = {
 };
 
 export const actions = {
-  async setRides({ commit }, payload) {
+  async setRides({ commit }) {
     const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
     // const domain = "https://api.vagon.tech";
     const endpoint = "/rides";

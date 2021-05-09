@@ -1,9 +1,10 @@
 <template>
-  <v-card elevation="5" v-if="getReqs.length > 0">
+  <v-card elevation="5"
+   v-if="getRides.length > 0">
     <v-toolbar color="info">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Driver Actions</v-toolbar-title>
+      <v-toolbar-title>Rider Actions</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -16,7 +17,7 @@
       </v-btn>
     </v-toolbar>
     <v-list>
-      <template v-for="(item, index) in getReqs">
+      <template v-for="(item, index) in getRides">
         <v-subheader
           v-if="item.header"
           :key="item.header"
@@ -29,14 +30,16 @@
           :inset="item.inset"
         ></v-divider>
 
-        <v-list-item v-else :key="item.title">
+        <v-list-item v-else :key="item.Drive.drive_id">
           <v-list-item-avatar>
             <v-img :src="items[index].avatar"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title v-html="item.User.name"></v-list-item-title>
-            <!-- <v-list-item-title v-html="item.Drive.rider_id"></v-list-item-title> -->
+              <!-- v-html="item.Drive.driver_id" -->
+            <v-list-item-title
+              v-html="item.User.name"
+            ></v-list-item-title>
             <v-list-item-subtitle>
               <v-icon size="20" color="primary">mdi-home</v-icon
               >{{ item.Drive.start_address }}</v-list-item-subtitle
@@ -62,19 +65,19 @@
           <v-list-item-action>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on" @click="accept(item)">
+                <v-btn icon v-bind="attrs" v-on="on" @click="complete(item)">
                   <v-icon color="grey">mdi-check-outline</v-icon>
                 </v-btn>
               </template>
-              <span>Accept Rider</span>
+              <span>Trip Completed</span>
             </v-tooltip>
              <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on" @click="deny(item)">
+                <v-btn icon v-bind="attrs" v-on="on" @click="cancel(item)">
                   <v-icon color="grey">mdi-close-circle-outline</v-icon>
                 </v-btn>
               </template>
-              <span>Kick Rider</span>
+              <span>Cancel Trip</span>
             </v-tooltip>
           </v-list-item-action>
         </v-list-item>
@@ -103,40 +106,38 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import axios from "axios";
+import axios from 'axios';
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   created() {
-    this.setReqs();
+    this.setRides();
   },
   computed: {
-    ...mapGetters("modules/trip/trip", ["getReqs"])
+    ...mapGetters("modules/rider/rides", ["getRides"])
   },
   methods: {
-    ...mapActions("modules/trip/trip", ["setReqs"]),
-    remove(index) {
-      this.items.splice(index, 1);
-    },
-    accept(item) {
+    ...mapActions("modules/rider/rides", ["setRides"]), 
+    complete(item) {
       // console.log(item);
       // console.log(item.Req);
       const pl = {
         drive_id: item.Req.drive_id,
         rider_id: item.Req.rider_id,
-        status: "accepted"
+        status: "complete"
       };
       this.req(pl);
-      this.setReqs();
+      this.setRides();
     },
-    deny(item) {
+    cancel(item) {
       // console.log(item.Req);
       const pl = {
         drive_id: item.Req.drive_id,
         rider_id: item.Req.rider_id,
-        status: "rejected"
+        status: "cancelled"
       };
       this.req(pl);
-      this.setReqs();
+      this.setRides();
     },
     async req(payload) {
       const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
@@ -158,6 +159,7 @@ export default {
     }
   },
   data: () => ({
+    drawer: false,
     group: 0,
     items: [
       { header: "Current Riders" },
@@ -166,43 +168,25 @@ export default {
         name: "Alex Muvadi",
         home: "1-23 Sommerville Drive",
         dest: "453 Keele Road",
-        time: "4:00pm"
+        time: "2:30pm"
       },
-      { divider: true, inset: true },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-        name: "Allen Kaplan",
-        home: "3 Davis Drive",
-        dest: "52 King Road",
-        time: "4:00pm"
-      },
-      { divider: true, inset: true },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-        name: "Sandra Adams",
-        home: "93 Blackthorn Avenue",
-        dest: "57 King Road",
-        time: "4:00pm"
-      },
-      { divider: true, inset: true },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-        name: "Kali Gonzales",
-        home: "3-45 Melvile Street",
-        dest: "375 Patricia Drive",
-        time: "4:00pm"
-      },
+
       { divider: true, inset: true },
       {
         avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
         name: "Britta Holt",
         home: "234 Sandiford Blvd",
         dest: "375 Patricia Drive",
-        time: "4:00pm"
+        time: "8:00pm"
       },
       { divider: true, inset: true }
     ]
-  })
+  }),
+  watch: {
+    group() {
+      this.drawer = false;
+    }
+  }
 };
 </script>
 

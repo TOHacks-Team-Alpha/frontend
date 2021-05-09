@@ -1,17 +1,21 @@
 <template>
-  <v-container fluid class="mb-3">
+  <v-container fluid class="mb-8">
     <v-row justify="center" align="center" class="mx-2">
       <v-col cols="12" sm="6" md="4">
         <v-card
           v-scroll-reveal="{ delay: 250 }"
           class="text-center"
-          elevation="10"
+          elevation="5"
         >
-          <v-card-text class="text-h4 text-md-h3 white--text">
+          <v-card-text
+            class="text-h4 text-md-h3"
+            :class="$vuetify.theme.dark ? 'white--text' : ''"
+          >
             My Coins
             <v-chip medium color="orange">
-              <v-icon class="mr-2">mdi-circle-multiple</v-icon> 23</v-chip
-            >
+              <v-icon class="mr-2">mdi-circle-multiple</v-icon>
+              {{ getCoins }}
+            </v-chip>
           </v-card-text>
         </v-card>
       </v-col>
@@ -19,7 +23,10 @@
     <v-row justify="center" align="center" class="mx-2">
       <v-col cols="12">
         <v-card v-scroll-reveal="{ delay: 450 }">
-          <v-card-text class="text-h5 text-md-h4 white--text">
+          <v-card-text
+            class="text-h5 text-md-h4"
+            :class="$vuetify.theme.dark ? 'white--text' : ''"
+          >
             Redemption Options
           </v-card-text>
           <v-card-subtitle>
@@ -42,10 +49,10 @@
                         <v-col cols="12" sm="10" md="8">
                           <v-card color="rgb(0,0,0,0.75)">
                             <v-card-text
-                              class="text-h5 text-md-h4 white--text text-center"
+                              class="text-h5 text-md-h4 text-center white--text"
                             >
                               {{ item.title }}
-                              <v-chip color="orange" class="ml-4">
+                              <v-chip color="secondary" class="ml-4">
                                 <v-icon class="mr-2"
                                   >mdi-circle-multiple</v-icon
                                 >
@@ -71,7 +78,7 @@
                           <v-btn
                             v-bind="attrs"
                             v-on="on"
-                            color="orange"
+                            color="secondary"
                             class="mx-2"
                             >Redeem Now</v-btn
                           >
@@ -113,7 +120,7 @@
                           </v-card>
                         </template>
                       </v-dialog>
-                      <v-btn color="black"> Learn More</v-btn>
+                      <v-btn> Learn More</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-hover>
@@ -127,6 +134,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data: () => ({
     items: [
@@ -167,6 +175,15 @@ export default {
         cost: 23
       }
     ]
-  })
+  }),
+  created() {
+    this.getData();
+  },
+  computed: {
+    ...mapGetters("modules/user", ["getCoins"])
+  },
+  methods: {
+    ...mapActions("modules/user", ["getData"])
+  }
 };
 </script>

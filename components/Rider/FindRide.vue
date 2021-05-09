@@ -3,17 +3,8 @@
     <v-card-text class="text-h4 text-md-h3 white--text">
       Find a Ride
     </v-card-text>
-    <v-card-subtitle>
-      <Destination />
-    </v-card-subtitle>
     <v-card-text>
-      <!-- <GmapMap
-        :center="{ lat: toronto.lat, lng: toronto.lng }"
-        :zoom="zoom"
-        :map-type-id="type"
-        style="width: 100%; height: 500px"
-      >
-      </GmapMap> -->
+      <Destination />
     </v-card-text>
   </v-card>
 </template>

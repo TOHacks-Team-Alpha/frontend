@@ -1,6 +1,9 @@
 <template>
   <v-card elevation="5">
-    <v-card-text class="text-h4 text-md-h3 white--text">
+    <v-card-text
+      class="text-h4 text-md-h3"
+      :class="$vuetify.theme.dark ? 'white--text' : ''"
+    >
       Trip Map
     </v-card-text>
     <v-card-text>
@@ -18,6 +21,11 @@
           :draggable="true"
           @click="center = m.position"
         />
+        <Gmap-polyline
+          v-bind:path.sync="path"
+          v-bind:options="{ strokeColor: 'black' }"
+        >
+        </Gmap-polyline>
       </GmapMap>
     </v-card-text>
   </v-card>
@@ -31,22 +39,26 @@ export default {
     zoom: 15,
     type: "roadmap",
     toronto: {
-      lat: 43.6533,
+      lat: 43.6528,
       lng: -79.3832
     },
     markers: [
       {
         position: {
-          lat: 43.6533,
+          lat: 43.648,
           lng: -79.4
         }
       },
       {
         position: {
-          lat: 43.6533,
+          lat: 43.6544,
           lng: -79.37
         }
       }
+    ],
+    path: [
+      { lat: 43.648, lng: -79.4 },
+      { lat: 43.6544, lng: -79.37 }
     ]
   }),
   computed: {

@@ -29,10 +29,16 @@
           </router-link>
         </v-toolbar-title>
       </div>
+      <v-spacer v-if="mobile"></v-spacer>
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        class="ml-4 pt-6"
+        color="orange"
+      ></v-switch>
+      <v-icon>mdi-theme-light-dark</v-icon>
       <v-spacer />
-      <v-tabs v-if="!mobile" color="white">
+      <v-tabs v-if="!mobile" :color="$vuetify.theme.dark ? 'white' : 'primary'">
         <v-spacer></v-spacer>
-        <v-tabs-slider color="white"></v-tabs-slider>
         <template v-for="item in filteredRoutes">
           <v-tab :key="item.id" :to="item.to">
             <v-icon class="ma-2" color="grey darken-2">{{ item.icon }}</v-icon>
@@ -50,11 +56,21 @@
         </v-fade-transition>
       </v-container>
     </v-main>
-    <v-footer absolute dark padless app>
+    <v-footer
+      absolute
+      padless
+      app
+      :color="$vuetify.theme.dark ? '' : 'primary'"
+    >
       <v-row justify="center" align="center" class="pa-0 ma-0">
         <v-col cols="12" class="pa-0 ma-0">
-          <v-card flat tile class="white--text text-center">
-            <v-card-text class="text-body-2 text-md-body-1 white--text">
+          <v-card
+            flat
+            tile
+            class="text-center"
+            :color="$vuetify.theme.dark ? '' : 'primary lighten-2'"
+          >
+            <v-card-text class="text-body-2 text-md-body-1">
               <v-icon> {{ icon }} </v-icon>
               {{ title }}
             </v-card-text>
@@ -65,7 +81,7 @@
                     v-bind="attrs"
                     v-on="on"
                     :href="item.href"
-                    class="mx-4 "
+                    class="mx-4"
                     text
                   >
                     <v-icon class="mr-1" size="24px">
@@ -98,12 +114,17 @@ export default {
     trunc: "vagon",
     icon: "mdi-car"
   }),
-  async mounted() {
+  created() {
+    // matts sketchy login fix :)
+    this.$fire.auth.onAuthStateChanged(() => {
+      const user = this.$fire.auth.currentUser;
+      if (user) {
+        this.login(user.toJSON());
+      }
+    });
+  },
+  mounted() {
     this.isMounted = true;
-    const user = await this.$fire.auth.currentUser;
-    if (user !== null) {
-      this.login(user);
-    }
   },
   computed: {
     ...mapGetters("modules/layout/routes", ["getRoutes"]),
@@ -124,7 +145,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("modules/firebase/auth/login", ["login"])
+    ...mapMutations("modules/firebase/auth", ["login"])
   }
 };
 </script>

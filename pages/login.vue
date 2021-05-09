@@ -9,7 +9,10 @@
               <v-card-text class="text-overline pb-0">
                 welcome back
               </v-card-text>
-              <v-card-text class="text-h4 text-md-h3 py-0 white--text">
+              <v-card-text
+                class="text-h4 text-md-h3 py-0"
+                :class="$vuetify.theme.dark ? 'white--text' : ''"
+              >
                 Login
               </v-card-text>
               <v-card-text class="text-body-2 text-md-body-1">
@@ -64,13 +67,18 @@
                     </v-btn>
                   </v-col>
                   <v-col>
-                    <v-btn color="black" @click="googleSignIn">
+                    <v-btn @click="googleSignIn">
                       Sign in with Google
                       <v-icon class="ml-2">mdi-google</v-icon>
                     </v-btn>
                   </v-col>
                   <v-spacer></v-spacer>
                 </v-row>
+              </v-card-actions>
+              <v-card-actions>
+                <v-btn @click="getMeToken">
+                  Print the JWT to Console
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-window-item>
@@ -79,7 +87,10 @@
               <v-card-text class="text-overline pb-0">
                 welcome
               </v-card-text>
-              <v-card-text class="text-h4 text-md-h3 py-0 white--text">
+              <v-card-text
+                class="text-h4 text-md-h3 py-0"
+                :class="$vuetify.theme.dark ? 'white--text' : ''"
+              >
                 Create an account
               </v-card-text>
               <v-card-text class="text-body-2 text-md-body-1">
@@ -141,13 +152,18 @@
                     </v-btn>
                   </v-col>
                   <v-col>
-                    <v-btn color="black" @click="googleSignIn()">
+                    <v-btn @click="googleSignIn()">
                       Sign in with Google
                       <v-icon class="ml-2">mdi-google</v-icon>
                     </v-btn>
                   </v-col>
                   <v-spacer></v-spacer>
                 </v-row>
+              </v-card-actions>
+              <v-card-actions>
+                <v-btn @click="getMeToken">
+                  Print the JWT to Console
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-window-item>
@@ -160,7 +176,10 @@
           <v-card-text class="text-overline pb-0">
             goodbye
           </v-card-text>
-          <v-card-text class="text-h4 text-md-h3 py-0 white--text">
+          <v-card-text
+            class="text-h4 text-md-h3 py-0"
+            :class="$vuetify.theme.dark ? 'white--text' : ''"
+          >
             Logout
           </v-card-text>
           <v-card-text class="text-body-2 text-md-body-1">
@@ -172,13 +191,13 @@
               >Logout <v-icon class="ml-1">mdi-logout</v-icon>
             </v-btn>
           </v-card-actions>
+          <v-card-actions>
+            <v-btn @click="getMeToken">
+              Print the JWT to Console
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
-    <v-row justify="center" align="center">
-      <v-btn @click="getMeToken">
-        Print the JWT to Console
-      </v-btn>
     </v-row>
   </v-container>
 </template>
@@ -224,10 +243,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions("modules/firebase/auth", ["login"]),
-    ...mapActions("modules/firebase/auth", ["logout"]),
-    ...mapActions("modules/firebase/auth", ["signUp"]),
-    ...mapActions("modules/firebase/auth", ["googleLogin"]),
+    ...mapActions("modules/firebase/auth", [
+      "login",
+      "logout",
+      "signUp",
+      "googleLogin"
+    ]),
     validate() {
       if (this.$refs.form.validate()) {
         this.loader = "loading";
