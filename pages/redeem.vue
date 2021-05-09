@@ -21,7 +21,7 @@
       </v-col>
     </v-row>
     <v-row justify="center" align="center" class="mx-2">
-      <v-col cols="12">
+      <v-col cols="12" sm="10" md="8">
         <v-card v-scroll-reveal="{ delay: 450 }">
           <v-card-text
             class="text-h5 text-md-h4"

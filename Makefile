@@ -1,19 +1,19 @@
 build:
-	docker build -t ruhacks-frontend .
+	docker build -t tohacks-frontend .
 
 run:
 	docker run  --rm -d -p 8080:8080 \
-		--name ruhacks-frontend ruhacks-frontend	
+		--name tohacks-frontend tohacks-frontend	
 
 kill:
-	docker kill ruhacks-frontend
+	docker kill tohacks-frontend
 
 	
 cloud:
-	docker tag ruhacks-frontend gcr.io/diabetech-515ed/ruhacks-frontend
-	docker push gcr.io/diabetech-515ed/ruhacks-frontend
+	docker tag tohacks-frontend gcr.io/vagon-abe86/tohacks-frontend
+	docker push gcr.io/vagon-abe86/tohacks-frontend
 
 
 dhub:
-	docker tag ruhacks-frontend alphakilo07/ruhacks-frontend
-	docker push alphakilo07/ruhacks-frontend
+	docker tag tohacks-frontend alphakilo07/tohacks-frontend
+	docker push alphakilo07/tohacks-frontend
