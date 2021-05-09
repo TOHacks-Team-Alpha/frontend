@@ -27,7 +27,7 @@ export const actions = {
         console.log(err);
       });
   },
-  async googleLogin({ commit }) {
+  async googleLogin({ commit }, payload) {
     this.provider = new firebase.auth.GoogleAuthProvider();
     await this.$fire.auth
       .signInWithPopup(this.provider)
@@ -41,6 +41,27 @@ export const actions = {
       .catch(e => {
         this.$notify.error(e.message);
       });
+      const body = {
+        name: payload.name
+      };
+      if(body){
+      const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
+      // const domain = "https://api.vagon.tech";
+      const token = await this.$fire.auth.currentUser.getIdToken();
+      await axios
+        .put(domain + "/user", body, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(res => {
+          this.data = res.data;
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log("unable to load data: " + err);
+        });
+      }
   },
   async logout({ commit }) {
     await this.$fire.auth

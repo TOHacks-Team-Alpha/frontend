@@ -61,7 +61,7 @@
                     </v-btn>
                   </v-col>
                   <v-col>
-                    <v-btn color="secondary" @click="switchWindow">
+                    <v-btn color="secondary" @click="switchWindow()">
                       Create an account
                       <v-icon class="ml-2">mdi-account</v-icon>
                     </v-btn>
@@ -74,11 +74,6 @@
                   </v-col>
                   <v-spacer></v-spacer>
                 </v-row>
-              </v-card-actions>
-              <v-card-actions>
-                <v-btn @click="getMeToken">
-                  Print the JWT to Console
-                </v-btn>
               </v-card-actions>
             </v-card>
           </v-window-item>
@@ -99,7 +94,7 @@
               <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
                   <v-text-field
-                    1
+                    v-model="name"
                     :counter="10"
                     :rules="nameRules"
                     label="Name"
@@ -146,7 +141,7 @@
                     </v-btn>
                   </v-col>
                   <v-col>
-                    <v-btn color="secondary" @click="switchWindow">
+                    <v-btn color="secondary" @click="switchWindow()">
                       Switch to Login
                       <v-icon class="ml-2">mdi-login</v-icon>
                     </v-btn>
@@ -159,11 +154,6 @@
                   </v-col>
                   <v-spacer></v-spacer>
                 </v-row>
-              </v-card-actions>
-              <v-card-actions>
-                <v-btn @click="getMeToken">
-                  Print the JWT to Console
-                </v-btn>
               </v-card-actions>
             </v-card>
           </v-window-item>
@@ -212,15 +202,16 @@ export default {
     loader: null,
     selectedItem: 0,
     name: "",
+    form: [],
     nameRules: [
       v => !!v || "Name is required",
       v => (v && v.length <= 10) || "Name must be less than 10 characters"
     ],
-    password: "",
     passwordRules: [
       v => !!v || "Password is required",
       v => (v && v.length <= 20) || "Password must be less than 20 characters"
     ],
+    password: "",
     email: "",
     emailRules: [
       v => !!v || "E-mail is required",
@@ -282,7 +273,10 @@ export default {
       }
     },
     googleSignIn() {
-      this.googleLogin();
+      const payload = {
+        name: this.name
+      };
+      this.googleLogin(payload);
     },
     async getMeToken() {
       const token = await this.$fire.auth.currentUser.getIdToken();
