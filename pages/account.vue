@@ -56,6 +56,17 @@
                   :value="getName"
                   label="Name"
                   outlined
+                  disabled
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row justify="center" align="center">
+              <v-col>
+                <v-text-field
+                  class="mx-2"
+                  v-model="name"
+                  label="Name"
+                  outlined
                 ></v-text-field>
                 <v-btn @click="updateName()"> update name </v-btn>
               </v-col>
@@ -166,6 +177,9 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 
 export default {
+  data: () => ({
+    name: ""
+  }),
   created() {
     this.getData();
   },
@@ -185,7 +199,9 @@ export default {
       const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
       // const domain = "https://api.vagon.tech";
       const token = await this.$fire.auth.currentUser.getIdToken();
-      const body = null;
+      const body = {
+        name: this.name
+      };
       await axios
         .put(domain + "/user", body, {
           headers: {
@@ -195,6 +211,8 @@ export default {
         .then(res => {
           this.data = res.data;
           console.log(res.data);
+          this.getData();
+          this.name = "";
         })
         .catch(err => {
           console.log("unable to load data: " + err);

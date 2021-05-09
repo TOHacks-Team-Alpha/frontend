@@ -37,8 +37,14 @@
       ></v-switch>
       <v-icon>mdi-theme-light-dark</v-icon>
       <v-spacer />
-      <v-tabs v-if="!mobile" :color="$vuetify.theme.dark ? 'white' : 'primary'">
+      <v-tabs
+        v-if="!mobile"
+        :color="$vuetify.theme.dark ? 'secondary' : 'primary'"
+      >
         <v-spacer></v-spacer>
+        <v-tabs-slider
+          :color="$vuetify.theme.dark ? 'secondary' : 'primary'"
+        ></v-tabs-slider>
         <template v-for="item in filteredRoutes">
           <v-tab :key="item.id" :to="item.to">
             <v-icon class="ma-2" color="grey darken-2">{{ item.icon }}</v-icon>

@@ -80,6 +80,7 @@
                             v-on="on"
                             color="secondary"
                             class="mx-2"
+                            @click="purchase(item.code)"
                             >Redeem Now</v-btn
                           >
                         </template>
@@ -135,6 +136,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 export default {
   data: () => ({
     items: [
@@ -142,37 +144,43 @@ export default {
         title: "Gas Gift Card",
         subtitle: "Why not treat yourself to some free gas?",
         img: "/img/redeem/gas.png",
+        code: "gas",
         cost: 34
       },
       {
         title: "Plant a Tree",
         subtitle: "Help the environment and spend your coins planting a tree.",
         img: "/img/redeem/tree.png",
-        cost: 21
+        code: "trees",
+        cost: 20
       },
       {
         title: "Amazon Gift Card",
         subtitle: "Want to buy something off Amazon? We got you covered.",
         img: "/img/redeem/amazon.png",
-        cost: 50
+        code: "amazon",
+        cost: 500
       },
       {
         title: "Donate to a charity",
         subtitle: "Pick a charity and we'll donate your $value in coins to it!",
         img: "/img/redeem/charity.png",
+        code: "charity",
         cost: 15
       },
       {
         title: "Buy the developers a coffee",
         subtitle: "Do you feel like thanking us? Buy us a coffee!",
         img: "/img/redeem/coffee.png",
+        code: "donate",
         cost: 5
       },
       {
         title: "Purchase Swag",
         subtitle: "Use your coins to puchase an official CarPool T-Shirt! Wow!",
         img: "/img/redeem/t-shirt.png",
-        cost: 23
+        code: "swag",
+        cost: 20
       }
     ]
   }),
@@ -183,7 +191,32 @@ export default {
     ...mapGetters("modules/user", ["getCoins"])
   },
   methods: {
-    ...mapActions("modules/user", ["getData"])
+    ...mapActions("modules/user", ["getData"]),
+    async purchase(pl) {
+      const body = {
+        item: pl
+      };
+      const domain = "https://vagon-backend-my7m42cgfa-uc.a.run.app";
+      // const domain = "https://api.vagon.tech";
+      const token = await this.$fire.auth.currentUser.getIdToken();
+      await axios
+        .post(domain + "/purchase", body, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(res => {
+          this.data = res.data;
+          console.log(res.data);
+          this.getData();
+          if(res.data.error){
+            alert(res.data.error)
+          }
+        })
+        .catch(err => {
+          console.log("unable to load data: " + err);
+        });
+    }
   }
 };
 </script>
